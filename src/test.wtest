@@ -1,0 +1,40 @@
+import trenes.*
+
+describe "testX" {
+	var vagon1 = new VagonPasajero(largo = 10,ancho = 2)
+	var carga1 = new VagonCarga(limite = 100)
+	var carga2 = new VagonCarga (limite = 40000)
+	var locomotora1 = new Locomotora(peso=80,arrastre=8000,velMax=50)
+	var locomotora2 = new Locomotora(peso = 50, arrastre = 100,velMax = 20)
+	var formacion1= new Formacion(vagones = [vagon1,carga1,carga2],locomotoras=[locomotora1,locomotora2])
+	var depo1 = new Deposito(formaciones = [formacion1])
+	
+	test "la formacion 1 puede transportar 80 pasajeros"{
+	assert.equals(80,formacion1.lleva())
+	}
+	
+	test "la formacion tiene todos 4 vagones livianos"{
+		assert.equals(1,formacion1.vagonesLivianos())
+	}
+	
+	test "la velocidad de la locomotora es de 20"{
+		assert.equals(20,formacion1.rapidez())
+	}
+	
+	test "la formacion no es eficiente por la locomotora 2"{
+		assert.notThat(formacion1.eficiencia())
+	}
+	
+	test "la formacion no se puede mover"{
+		assert.notThat(formacion1.puedeMoverse())
+	}
+	
+	test "a la formacion 1 para moverse le falta"{
+		assert.equals(38850,formacion1.cuantoFaltaParaMoverse())
+	} 
+	
+	test " el deposito requiere conductor experimentado"{
+		assert.that(depo1.necesitaExperimentado())
+	}
+	
+}
